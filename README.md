@@ -1,5 +1,12 @@
 You can see readme file in client and server folder
 
+Run this two command into client and server folder
+npm install - for installing all packages and dependencies
+
+it is compulsory to have this in your local system
+//node
+//mongo
+
 Preview of Project 
 
 ![Screenshot (189)](https://github.com/user-attachments/assets/b436b15b-31ab-4c6c-a988-4b400a74601d)
