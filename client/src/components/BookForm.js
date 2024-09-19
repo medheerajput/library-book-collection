@@ -1,7 +1,10 @@
+// src/components/BookForm.js
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import bookValidationSchema from '../validation/bookValidation.js'; // Import validation schema
+import * as Yup from 'yup';
+import { TextField, Button } from '@mui/material';
 import '../styles/BookForm.css'; 
+import bookValidationSchema from '../validation/bookValidation';
 
 const BookForm = ({ onSubmit, initialData = {}, loading }) => {
   // Initial values for Formik
@@ -9,44 +12,74 @@ const BookForm = ({ onSubmit, initialData = {}, loading }) => {
     title: initialData.title || '',
     author: initialData.author || '',
     year: initialData.year || '',
-    genre: initialData.genre || ''
+    genre: initialData.genre || '',
   };
 
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={bookValidationSchema} 
+      validationSchema={bookValidationSchema}
       onSubmit={onSubmit}
     >
       {({ isSubmitting }) => (
-        <Form className="book-form">
+        <Form>
           <div className="form-group">
-            <label htmlFor="title">Title:</label>
-            <Field type="text" id="title" name="title" />
-            <ErrorMessage name="title" component="div" className="error-message" />
+            <Field
+              as={TextField}
+              name="title"
+              label="Title"
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              helperText={<ErrorMessage name="title" />}
+            />
           </div>
 
           <div className="form-group">
-            <label htmlFor="author">Author:</label>
-            <Field type="text" id="author" name="author" />
-            <ErrorMessage name="author" component="div" className="error-message" />
+            <Field
+              as={TextField}
+              name="author"
+              label="Author"
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              helperText={<ErrorMessage name="author" />}
+            />
           </div>
 
           <div className="form-group">
-            <label htmlFor="year">Year:</label>
-            <Field type="number" id="year" name="year" />
-            <ErrorMessage name="year" component="div" className="error-message" />
+            <Field
+              as={TextField}
+              name="year"
+              label="Year"
+              type="number"
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              helperText={<ErrorMessage name="year" />}
+            />
           </div>
 
           <div className="form-group">
-            <label htmlFor="genre">Genre:</label>
-            <Field type="text" id="genre" name="genre" />
-            <ErrorMessage name="genre" component="div" className="error-message" />
+            <Field
+              as={TextField}
+              name="genre"
+              label="Genre"
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              helperText={<ErrorMessage name="genre" />}
+            />
           </div>
 
-          <button type="submit" disabled={loading || isSubmitting}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={loading || isSubmitting}
+          >
             {loading || isSubmitting ? 'Submitting...' : 'Submit'}
-          </button>
+          </Button>
         </Form>
       )}
     </Formik>

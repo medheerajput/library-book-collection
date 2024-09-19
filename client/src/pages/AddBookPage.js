@@ -1,34 +1,26 @@
+// src/components/AddBookDialog.js
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom"
-import { addBook } from '../api/booksApi';
-import BookForm from '../components/BookForm';
-import '../styles/BookForm.css';  
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import BookForm from '../components/BookForm'; 
 
-const AddBookPage = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
-  const handleAddBook = async (bookData) => {
-    setLoading(true);
-    try {
-      await addBook(bookData);
-      navigate('/');
-    } catch (err) {
-      setError('Failed to load app');
-    } finally {
-      setLoading(false);
-    }
+const AddBookDialog = ({ open, onClose, onAdd }) => {
+  const handleAdd = (bookData) => {
+    onAdd(bookData);
+    onClose(); 
   };
 
   return (
-    <div className="form-container">
-      <h1>Add a New Book</h1>
-      {error && <p className="error-message">{error}</p>}
-      <BookForm onSubmit={handleAddBook} loading={loading} />
-    </div>
+    <Dialog
+    fullWidth
+    PaperProps={{ style: { width: '600px' } }} 
+     open={open} onClose={onClose}>
+      <DialogTitle>Add New Book</DialogTitle>
+      <DialogContent>
+        <BookForm onSubmit={handleAdd} /> 
+        <Button onClick={onClose} sx={{bgcolor:"red",color:"white",marginTop:"5px"}} >Cancel</Button>
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default AddBookPage;
-
+export default AddBookDialog;

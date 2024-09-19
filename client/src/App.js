@@ -11,8 +11,6 @@ function App() {
     <div className="App">
       <Routes>
         <Route exact path="/" element={<HomePage />} />
-        <Route path="/add" element={<AddBookPage />} />
-        <Route path="/book/:id" element={<BookDetails />} />
       </Routes>
       <ToastContainer />
     </div>

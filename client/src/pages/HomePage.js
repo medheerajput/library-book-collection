@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchBooks, deleteBook } from '../api/booksApi';
+import { fetchBooks, deleteBook, addBook } from '../api/booksApi';
 import {
   Table,
   TableBody,
@@ -25,6 +25,8 @@ import DeleteConfirmationDialog from '../components/DeleteConfirmationDialog';
 import EditBookDialog from '../components/EditBookDialog';
 import BookDetailsDialog from './BookDetailsDialog';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import AddIcon from '@mui/icons-material/Add';
+import AddBookDialog from './AddBookPage';
 
 // Styled components for scrollbar
 const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
@@ -42,7 +44,7 @@ const HomePage = () => {
   const [currentBookId, setCurrentBookId] = useState(null);
   const [isDetailsDialogOpen, setIsDetailsDialogOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(false);
-
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
   // Pagination state
   const [page, setPage] = useState(0);
@@ -131,6 +133,18 @@ const HomePage = () => {
   if (loading) return <CircularProgress />;
   if (error) return <Typography color="error">{error}</Typography>;
 
+
+  //Add Books
+  const handleAddBook = async (bookData) => {
+    try {
+      await addBook(bookData);
+      setBooks((prevBooks) => [...prevBooks, bookData]);
+      Toast.success('Book added successfully');
+    } catch (err) {
+      Toast.error('Failed to add the book');
+    }
+  };
+
   return (
     <Box p={2}>
       <Typography variant="h4" gutterBottom>
@@ -139,11 +153,11 @@ const HomePage = () => {
 
       <Box display="flex" justifyContent="space-between" mb={2}>
         <div>
-          <Link to="/add">
-            <Button variant="contained" color="primary">
-              Add Book
-            </Button>
-          </Link>
+          <Button
+            startIcon={<AddIcon />}
+            variant="contained" color="primary" onClick={() => setIsAddDialogOpen(true)}>
+            Add Book
+          </Button>
           <br /><br />
           <Typography variant="h9">
             Total Books {totalBooks}
@@ -219,6 +233,14 @@ const HomePage = () => {
         onRowsPerPageChange={handleChangeRowsPerPage}
         sx={{ mt: 2 }}
       />
+
+      {/* Add Book */}
+      <AddBookDialog
+        open={isAddDialogOpen}
+        onClose={() => setIsAddDialogOpen(false)}
+        onAdd={handleAddBook}
+      />
+
 
       {/* delete confirmation */}
       <DeleteConfirmationDialog
