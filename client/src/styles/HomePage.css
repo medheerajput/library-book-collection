@@ -1,0 +1,26 @@
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .add-book-btn {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+  }
+  
+  .book-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .add-book-btn:hover {
+    background-color: #218838;
+  }
+  
